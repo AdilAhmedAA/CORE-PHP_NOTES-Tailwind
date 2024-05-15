@@ -3,6 +3,7 @@
 $notes = $db->query('select * from notes');
 $users = $db->query('select * from users');
 
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'add-note') {
     $note = $_POST;
@@ -14,22 +15,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'add-note')
     ];
 
     if ($db->executenow($query, $params)) {
+        $_SESSION['msg'] = "Note Added successfully";
         header('Location: /');
         exit;
     } else {
+        $_SESSION['er'] = "Error adding note.";
         echo "Error adding note.";
     }
 }
-if ( $_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'delete-note' ) {
-    $noteId = $_POST['note_id']; 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'delete-note') {
+    $noteId = $_POST['note_id'];
     $query = 'DELETE FROM notes WHERE id = :id';
     $params = ['id' => $noteId];
 
-    if ($db->executenow($query, $params)) {
+    try {
+        if ($db->executenow($query, $params)) {
+            $_SESSION['msg'] = "Note Deleted successfully";
+            header('Location: /');
+            exit;
+        }
+    } catch (PDOException $e) {
+        $_SESSION['er'] = "Error deleting note.";
         header('Location: /');
         exit;
-    } else {
-        echo "Error deleting note.";
     }
 }
 
@@ -45,9 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'edit-note'
 
 
     if ($db->executenow($query, $params)) {
+        $_SESSION['msg'] = "Note Edited successfully";
         header('Location: /');
         exit;
     } else {
+        $_SESSION['er'] = "Error updating note.";
         echo "Error updating note.";
     }
 }
