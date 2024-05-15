@@ -4,13 +4,13 @@ $notes = $db->query('select * from notes');
 $users = $db->query('select * from users');
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['method'] == 'add-note') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'add-note') {
     $note = $_POST;
 
     $query = 'INSERT INTO notes (body, user_id) VALUES (:body, :user_id)';
     $params = [
-        ':body' => $note['body'],
-        ':user_id' => $note['user']
+        'body' => $note['body'],
+        'user_id' => $note['user']
     ];
 
     if ($db->executenow($query, $params)) {
@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['method'] == 'add-note') {
         echo "Error adding note.";
     }
 }
-if ( $_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['method'] == 'delete-note' ) {
+if ( $_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'delete-note' ) {
     $noteId = $_POST['note_id']; 
     $query = 'DELETE FROM notes WHERE id = :id';
-    $params = [':id' => $noteId];
+    $params = ['id' => $noteId];
 
     if ($db->executenow($query, $params)) {
         header('Location: /');
@@ -33,7 +33,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['method'] == 'delete-note' 
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['method'] == 'edit-note') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['FormAction'] == 'edit-note') {
     $note = $_POST;
 
     $query = 'UPDATE notes SET body = :body, user_id = :user_id WHERE id = :id';

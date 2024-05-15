@@ -43,7 +43,7 @@
                     </button>
             </div>
             <form action="" method="POST">
-            <input type="hidden" name="method" value="add-note">
+            <input type="hidden" name="FormAction" value="add-note">
                 <div class="mb-4">
                     <label for="body" class="block text-sm font-medium text-gray-700">Note</label>
                     <textarea name="body" id="body" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter your note"></textarea>

@@ -8,7 +8,7 @@
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center" id="openModal<?php echo $count ?>">Edit</button>
                 <!-- Delete Button -->
                 <form action="" method="POST">
-                    <input type="hidden" name="method" value="delete-note">
+                    <input type="hidden" name="FormAction" value="delete-note">
                     <input type="hidden" name="note_id" value="<?php echo $note['id']; ?>">
                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2 inline-flex items-center">Delete</button>
                 </form>
@@ -41,7 +41,7 @@
                         </button>
                     </div>
                     <form action="" method="POST">
-                        <input type="hidden" name="method" value="edit-note">
+                        <input type="hidden" name="FormAction" value="edit-note">
                         <input type="hidden" name="note_id" id="editNoteId" value="<?php echo $note['id'] ?>">
                         <div class="mb-4">
                             <label for="editBody" class="block text-sm font-medium text-gray-700">Note</label>
